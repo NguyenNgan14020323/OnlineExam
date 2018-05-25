@@ -1,0 +1,51 @@
+<div class="row">
+  <button type="button" class="close" ng-click="cancel();">
+    <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+  </button>
+  <div class="modal-header">
+    <h3>Câu hỏi ngẫu nhiên từ các chủ đề</h3>
+    <h3 class="modal-title"></h3>
+  </div>
+  <div class="modal-body">
+    <div class="question_random">
+      <div class="row" style="border-bottom: 2px solid #e6e6e6;">
+        <div class="row category">
+          <div class="col-md-5 title_category" style="margin-top: 5px;">
+            <p>Chủ đề</p>
+          </div>
+          <div class="col-md-7 categories">
+            <select class="form-control" ng-model="category"
+              ng-options="item.name for item in categories" ng-change="update()">
+            </select>
+          </div>
+        </div>
+        <div class="row number_question_random">
+          <div class="col-md-5">
+            <p>Số lượng câu hỏi (lớn nhất: {{questions.length}})</p>
+          </div>
+          <div class="col-md-2">
+           <!--  <input type="number" class="form-control" name="question_random" min="{{min}}" max="{{max}}" ng-model="number_question_random" focus/> -->
+            <input type="number" class="form-control" name="question_random" min="{{min}}" max="{{max}}" ng-model="number_question_random" ng-change="view_random_question()" focus/>
+          </div>
+        </div>
+      </div>
+      <div class="row list_question_random" style="padding-top: 10px;">
+        <div class="row">
+          <div class="col-md-9">
+            <p>Danh sách câu hỏi được sinh ngẫu nhiên</p>
+          </div>
+          <div class="col-md-3">
+            <button style="float: right;" ng-click="auto_review()"><span class="glyphicon glyphicon-refresh"></span></button>
+          </div>
+        </div>
+        </br>
+        <ul ng-repeat="item in question_view_in_random">
+          <li>{{item[0].content}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row" style="border-top: 10px;">
+      <button type="button" class="btn btn-success" ng-click="push_question_section()">&nbsp;Thêm số lượng câu hỏi</button>
+    </div>
+  </div>
+</div>

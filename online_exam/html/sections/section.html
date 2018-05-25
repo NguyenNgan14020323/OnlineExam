@@ -1,0 +1,25 @@
+<div class="row">
+  <h1 class="title">Exam {{id_exam}}</h1>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="list_section">
+      <div class="row" id="section" ng-repeat="section in sections">
+        <div class="col-md-3">Section {{$index + 1}}</div>
+        <div class="col-md-3">Time: {{section.time_limit}} (minutes)</div>
+        <div class="dropdown question_section">
+          <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteSection(section);"></button>
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Question
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a ng-click="showAllQuestion(questions, section)">Form bank</a></li>
+            <li><a ng-click="addRandomQuestion(questions, section)">Random</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" id="new_section">
+  <button type="button" class="btn btn-success fa fa-plus" ng-click="open(section)">&nbsp;New Section</button>
+</div>

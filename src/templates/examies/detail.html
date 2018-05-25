@@ -1,0 +1,225 @@
+<h1>Cuộc thi</h1>
+<div class="row">
+   <div ng-if = "!check">
+      <div class="panel panel-info">
+         <div class="panel-title" style="text-align: center; padding: 15px; font-size: 18px; color: grey">Bài thi</div>
+         <div class="panel-body" style="background-color: #fafafa; margin: 10px;"> 
+            <div class="row">
+               <div class="col-xs-12 detail_exam_header">
+                  <span style="font-size: 18px; color: #000000;">Tên: <span >{{examies[0].name}}</span></span><br>
+                  <span style="font-size: 18px; color: #000000">Thời gian bắt đầu: <span >{{examies[0].open_time | date:'medium'}}</span></span><br>
+                  <span style="font-size: 18px; color: #000000">Thời gian kết thúc: <span >{{examies[0].close_time | date:'medium'}}</span></span><br>
+                  <span>Link: </span><a target="_blank" ui-sref="exam({id: examies[0].id ,exam_name: examies[0].name })">http://localhost:8888/#/examies/{{examies[0].name}}/id/{{examies[0].id}}</a><br><br>
+                  <button class="btn btn-default"><a href="http://localhost:3000/">Upload Student</a></button>
+               </div>
+               <button class="btn btn-success" ng-model="check" ng-click = "change()" value="true" style="margin-left: 47%; margin-bottom: 40px;">Edit Mark</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div ng-if="check" class="content col-xs-12">
+      <div ng-repeat="c in sections track by $index">
+      <div class="header_section">
+        <p class="col-xs-4">Session {{$index + 1}} </p>
+         <p class="col-xs-4" style="float: right;">Time : {{c.time_limit}} minutes</p>
+      </div>
+      <div class="row content_section">
+        <table id="table" class="table table-striped">
+            <tr ng-if="$index < 1">
+               <th>STT</th>
+               <th>Question</th>
+               <th>Total of Mark: {{total_mark}}</th>
+            </tr>
+          <tbody ng-repeat="question in c.question track by $index">
+            <tr>
+              <td>{{$index +1}}</td>
+              <td>{{question.content}}</td>
+              <td style="width: 15%">
+                  <input type="number" class="form-control" ng-blur="getdetails(c, question)" ng-model="question.mark">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<!-- <div class="modal-header">
+<div flex="20" layout="column">
+<h3 class="modal-title">Cuộc thi</h3>
+</div>
+</div> -->
+
+<!-- <div class="modal-body" ng-show="!showScore">
+   <div style="margin-bottom: 35px">
+      <form class="userForm">
+         <div ng-if = "check">
+          <div class="md-warn md-subheader _md" style="background-color: #323232; height: 50px; color: #ffffff; padding: 10px; border: 1px solid rgb(219, 221, 224);position: sticky; top: 0px; z-index: 2;" role="heading" aria-level="2">  
+            <div class="md-subheader-inner">   
+               <div class="md-subheader-content" style="float: left; padding: 5px;">
+                  <h3 class="panel-title">Exam : {{examies[0].name}}</h3>
+               </div> 
+               <div class="md-subheader-content" style="float: right;"><i class="fa fa-clock-o" style="font-size: 24px;"></i> Total time: <span ng-bind="minute"> </span> minutes , <span ng-bind="second"> </span> <span> seconds</span></span></timer></span></timer>
+               </div>
+            </div>
+         </div>
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" style="width: 80%; margin-left: 10%;">
+                  <div class="panel panel-info">
+                     <div class="panel-body">
+                        <div ng-repeat="c in sections.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+                           <ul class="list-group" style="border: 0px;margin-top: -1%; ">
+                              <li class="list-group-item" style="border: 0px ; color: rgb(95, 88, 88); display: inline-block; color: "><h3 class="panel-title">Session {{currentPage}} : {{c.name}} ({{c.time_limit}} minutes)</h3></li>
+                           </ul>
+                           <div  ng-repeat="question in c.question track by $index">
+                              <div ng-switch = "question.type">
+                                 <div ng-switch-when= "MulChoose">
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}: </span> {{question.title}} ({{question.mark}} đ)</li>
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;  margin-left: 2%">{{question.content}}</li>
+                                    <li class="list-group-item" style="border: 0px;">
+                                       <div  ng-if="question.file">
+                                          <div ng-if="question.filetype == 'image'"><img ng-src="{{question.file}}"></div>
+                                          <div ng-if ="question.filetype == 'video'"><audio controls>
+                                             <source src="{{question.file}}" type="audio/mpeg">
+                                          </audio></div>
+                                       </div>
+                                    </li>
+                                    <div ng-repeat="answer in question.answers track by $index">
+                                       <div ng-switch= {{$index}}>
+                                          <div ng-switch-when = 0> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(answer.grade)" value="{{answer.grade}}">A. {{answer.content}}</div> </div>
+                                          <div ng-switch-when = 1> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(answer.grade)" value="{{answer.grade}}">B. {{answer.content}}</div> </div>
+                                          <div ng-switch-when = 2> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(answer.grade)" value="{{answer.grade}}">C. {{answer.content}}</div> </div>
+                                          <div ng-switch-when = 3> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(answer.grade)" value="{{answer.grade}}">D. {{answer.content}}</div> </div>
+                                       </div>
+                                    </div> 
+                                 </div>
+                                 <div ng-switch-when = "TF">
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}: </span> {{question.title}} ({{question.mark}} đ)</li>
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;  margin-left: 2%">{{question.content}}</li>
+                                    <li class="list-group-item" style="border: 0px;">
+                                       <div  ng-if="question.file">
+                                          <div ng-if="question.filetype == 'image'"><img ng-src="{{question.file}}"></div>
+                                          <div ng-if ="question.filetype == 'video'"><audio controls>
+                                             <source src="{{question.file}}" type="audio/mpeg">
+                                          </audio></div>
+                                       </div>
+                                    </li>
+                                    <div>
+                                       <div ng-if="question.answers.tf == 1">
+                                          <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;"><span><input type="radio" name="" ng-click="checkAnswer(100)"> </span> True</div>
+                                          <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;"><span><input type="radio" name="" ng-click="checkAnswer(0)"> </span> False</div> 
+                                       </div>                             
+                                        <div ng-if="question.answers.tf != 1">
+                                          <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;"><span><input type="radio" name="" ng-click="checkAnswer(0)"> </span> True</div>
+                                          <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;"><span><input type="radio" name="" ng-click="checkAnswer(100)"> </span> False</div> 
+                                       </div>    
+                                    </div> 
+                                 </div>
+                                 <div ng-switch-when = "FillWord">
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}: </span> {{question.title}} ({{question.mark}} đ)</li>
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;">{{question.content}}</li>
+                                    <li class="list-group-item" style="border: 0px;">
+                                       <div  ng-if="question.file">
+                                          <div ng-if="question.filetype == 'image'"><img ng-src="{{question.file}}"></div>
+                                          <div ng-if ="question.filetype == 'video'"><audio controls>
+                                             <source src="{{question.file}}" type="audio/mpeg">
+                                          </audio></div>
+                                       </div>
+                                    </li>
+                                    <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;">
+                                       <input type="hidden" name="" value="{{question.answers.content}}">
+                                       <input type="text" placeholder="Đáp án" class="form-control" name="">        
+                                    </div> 
+                                 </div>  
+                                 <div ng-switch-when= "MulQuestion">
+                                  <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}: </span> {{question.title}} ({{question.mark}} đ)</li>
+                                    <li class="list-group-item" style="border: 0px;margin-top: -1%;"> {{question.content}} </li>
+                                    <li class="list-group-item" style="border: 0px;">
+                                       <div  ng-if="question.file">
+                                          <div ng-if="question.filetype == 'image'"><img ng-src="{{question.file}}"></div>
+                                          <div ng-if ="question.filetype == 'video'"><audio controls>
+                                             <source src="{{question.file}}" type="audio/mpeg">
+                                          </audio></div>
+                                       </div>
+                                    </li>
+                                    <div ng-repeat="questions in question.answers track by $index">
+                                       <div ng-switch="questions.type">
+                                          <div ng-switch-when="TF">
+                                              <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}.{{$index +1}}: </span> {{questions.title}} ({{questions.mark}} đ)</li>
+                                               <div>                             
+                                                   <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;"><span><input type="radio" name="" value="100"> </span> True</div>
+                                                   <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;"><span><input type="radio" name="" value="100"> </span> False</div>        
+                                                </div> 
+                                          </div>
+                                          <div ng-switch-when="FillWord">
+                                                <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}.{{$index +1}}: </span> {{questions.title}} ({{questions.mark}} đ)</li>
+                                             <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;">
+                                                <input type="hidden" id="answer{{$index+1}}" name="answerFillWord" value="{{questions.answers.content}}">
+                                                <input type="text" id="ans{{$index+1}}" ng-change="checkAnswerFillWord()" placeholder="Đáp án" class="form-control" name="">       
+                                             </div> 
+                                          </div>
+                                          <div ng-switch-when="MulChoose">
+                                           <li class="list-group-item" style="border: 0px;margin-top: -1%;"><span style="color: #31708f">Câu {{$index +1}}.{{$index +1}}: </span> {{questions.title}} ({{questions.mark}} đ)</li>
+                                             <div ng-repeat="choice in questions.answers track by $index">
+                                                 <div ng-switch= {{$index}}>
+                                                   <div ng-switch-when = 0> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(choice.grade)">A. {{choice.content}}</div> </div>
+                                                   <div ng-switch-when = 1> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(choice.grade)">B. {{choice.content}}</div> </div>
+                                                   <div ng-switch-when = 2> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(choice.grade)">C. {{choice.content}}</div> </div>
+                                                   <div ng-switch-when = 3> <div class="well well-sm"  style="margin-left: 30px; margin-right: 30px;" ng-click="checkAnswer(choice.grade)">D. {{choice.content}}</div> </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div> 
+                                 </div>
+                              </div>                   
+                           </div>  
+                        </div>
+                        <div class="panel-footer">
+                           <div class="row" style="text-align: center;">
+                              <ul class="pager" uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" ng-click="change()" class="pagination-sm" items-per-page="itemsPerPage"></ul>
+                           </div>
+                           <div class="row" style="text-align: center;">
+                              <button class="btn btn-success" ng-click="getScore()" style="border-radius: 5px;">Nộp bài</button>
+                           </div>
+                        </div> 
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div ng-if = "!check">
+            <div class="panel panel-info">
+               <div class="panel-title" style="text-align: center; padding: 15px; font-size: 18px; color: grey">Bài thi</div>
+               <div class="panel-body" style="background-color: #fafafa; margin: 10px;"> 
+                  <div class="row">
+                     <div class="col-xs-12 detail_exam_header">
+                        <span style="font-size: 18px; color: #000000;">Tên: <span >{{examies[0].name}}</span></span><br>
+                        <span style="font-size: 18px; color: #000000">Thời gian bắt đầu: <span >{{examies[0].open_time | date:'medium'}}</span></span><br>
+                        <span style="font-size: 18px; color: #000000">Thời gian kết thúc: <span >{{examies[0].close_time | date:'medium'}}</span></span><br><br>
+                        <button class="btn btn-default"><a href="http://localhost:3000/">Upload Student</a></button>
+                     </div>
+                     <button class="btn btn-success" ng-model="check" ng-click = "change()" value="true" style="margin-left: 47%; margin-bottom: 40px;">Bắt đầu</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+<div ng-show="showScore">
+   <div class="panel panel-info" style="width: 50%; margin-left: 20%; margin-top: 10%">
+      <div class="panel-heading">
+         <span style="font-size: 18px; color: #000000;">Tên: <span >{{examies[0].name}}</span></span><br>
+      </div>
+      <div class="panel-body">
+         <h1>Exam Result</h1>
+         <h4>Mark/ Total Mark : {{score | number:1}} điểm</h4>
+         <h4>True Answer/ Total Question : {{count}} / {{totalQuestion}}</h4>
+      </div>
+   </div>
+</div>
+ -->

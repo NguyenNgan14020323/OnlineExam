@@ -1,0 +1,44 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+<div class="modal-header">
+  <h3>Random question from an existing category</h3>
+  <h3 class="modal-title"></h3>
+</div>
+<div class="modal-body">
+  <div class="question_random">
+    <div class="row category">
+      <div class="col-md-2 title_category">
+        <p>Category</p>
+      </div>
+      <div class="col-md-8 categories">
+        <select class="form-control" ng-model="category"
+          ng-options="item.name for item in categories" ng-change="update()">
+        </select>
+      </div>
+    </div>
+    <div class="row number_question_random">
+      <div class="col-md-5">
+        <p>Number Of Random Question (<= {{questions.length}})</p>
+      </div>
+      <div class="col-md-2">
+        <input type="number" class="form-control" name="question_random" min="{{min}}" max="{{max}}" ng-model="number_question_random" ng-change="view_random_question()" focus/>
+      </div>
+    </div>
+    <div class="list_question_random">
+      <div class="row">
+        <div class="col-md-8">
+          <h4>List questions random in categories</h4>
+        </div>
+        <div class="col-md-3">
+          <button style="float: right;" ng-click="auto_review()"><i class="material-icons">autorenew</i></button>
+        </div>
+      </div>
+      </br>
+      <ul ng-repeat="item in question_view_in_random">
+        <li>{{item[0].content}}</li>
+      </ul>
+    </div>
+  </div>
+  <button type="button" class="btn btn-success" ng-click="push_question_section()">&nbsp;Add random Question</button>
+</div>

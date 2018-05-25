@@ -1,0 +1,155 @@
+
+
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+
+<div class="modal-header">
+  <div ng-if="question.id == null" flex="20" layout="column">
+    <h3 class="modal-title">Add question</h3>
+  </div>
+  <div ng-if="question.id != null" flex="20" layout="column">
+    <h3 class="modal-title">Edit question</h3>
+  </div>
+</div>
+<div class="modal-body">
+  <div ng-if="question.id == null">
+    <form>
+      Pick a topic:
+      <input type="radio" ng-model="question.type" value="Short">Short Answers
+      <input type="radio" ng-model="question.type" value="Match">Match Answers
+      <input type="radio" ng-model="question.type" value="TF">True/False Answers
+      <input type="radio" ng-model="question.type" value="MulChoose">MultipleChoose
+    </form>
+  </div>
+  <div ng-switch="question.type">
+    <div ng-switch-when="Short">
+      <h1>Short</h1>
+      <p>Welcome to a world of dogs.</p>
+    </div>
+    <div ng-switch-when="Match">
+      <h1>Match</h1>
+      <form name="userForm">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nội dung câu hỏi</label>
+            <textarea ng-model="question.content" data-ck-editor></textarea>
+    
+            {{question.content}}
+            <textarea ng-model="question.content"></textarea>
+          </md-input-container>
+        </div>
+        <div>
+          <label>Category</label>
+          <select class="form-control select_question" id="category" name="category" ng-model="question.category_id">
+                    <option ng-repeat="category in categories" ng-selected="question.category_id == category.id " value="{{category.id}}" >{{category.name}}</option>
+                  </select>
+        </div>
+        <div ng-repeat="answer in question.answers ">
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block " flex-gt-sm>
+              <label>Đáp án {{answer.id }}</label>
+              <input ng-model="answer.content">
+            </md-input-container>
+            <md-input-container class="md-block " flex-gt-sm>
+              <input ng-model="answer.content_match">
+            </md-input-container>
+          </div>
+        </div>
+        <form-element label="">
+          <div class="text-right">
+            <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+            <button ng-click="saveQuestion();" class="btn btn-sm btn-primary" type="submit">
+                                    <i class="ace-icon fa fa-check"></i>{{buttonText}}
+                                </button>
+          </div>
+        </form-element>
+      </form>
+    </div>
+    <div ng-switch-when="TF">
+      <h1>TF</h1>
+      <form name="userForm">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nội dung câu hỏi</label>
+            <textarea ng-model="question.content"></textarea>
+          </md-input-container>
+        </div>
+        <div>
+          <label>Category</label>
+          <select class="form-control select_question" id="category" name="category" ng-model="question.category_id">
+                    <option ng-repeat="category in categories" ng-selected="question.category_id == category.id " value="{{category.id}}" >{{category.name}}</option>
+                  </select>
+        </div>
+        <div ng-repeat="answer in question.answers">
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block " flex-gt-sm>
+              <label> {{ $index + 1 }}</label>
+              <input ng-model="answer.content">
+            </md-input-container>
+
+            <md-input-container class="md-block " flex-gt-sm>
+              <input type="radio" ng-model="answer.tf" value="1">True
+              <input type="radio" ng-model="answer.tf" value="0">False
+            </md-input-container>
+          </div>
+        </div>
+        <form-element label="">
+          <div class="text-right">
+            <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+            <button ng-click="saveQuestion();" class="btn btn-sm btn-primary" type="submit">
+                                    <i class="ace-icon fa fa-check"></i>{{buttonText}}
+                                </button>
+          </div>
+        </form-element>
+      </form>
+    </div>
+    <div ng-switch-when="MulChoose">
+      <h1>MulChoose</h1>
+      <form name="userForm">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nội dung câu hỏi</label>
+            <textarea ng-model="question.content"></textarea>
+          </md-input-container>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <label style="display: inline-block">Category</label>
+            <select class="form-control select_question" id="category" name="category" ng-model="question.category_id">
+                    <option value="0" selected>--Select Category--</option>
+                    <option ng-repeat="category in categories" ng-selected="question.category_id == category.id " value="{{category.id}}" >{{category.name}}</option>
+                  </select>
+          </div>
+          <div class="col-xs-6">
+            <select ng-change="numberAnswer()" ng-model="numberCorrect" >
+              <option ng-repeat="x in numberCorrectAnswer" value="{{x}}">{{x}} Correct Answer </option>
+            </select>
+          </div>
+        </div>
+        {{numberCorrect}}
+        <div ng-repeat="answer in question.answers">
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block 6" flex-gt-sm>
+              <label>Đáp án {{ $index + 1 }}</label>
+              <input ng-model="answer.content">
+            </md-input-container>
+
+            <md-input-container class="md-block " flex-gt-sm>
+              <label>Phần trăm điểm</label>
+              <input type="number" ng-model="answer.grade">
+            </md-input-container>
+          </div>
+        </div>
+        <form-element label="">
+          <div class="text-right">
+            <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+            <button ng-click="saveQuestion();" class="btn btn-sm btn-primary" type="submit">
+                                    <i class="ace-icon fa fa-check"></i>{{buttonText}}
+                                </button>
+          </div>
+        </form-element>
+      </form>
+    </div>
+  </div>
+</div>

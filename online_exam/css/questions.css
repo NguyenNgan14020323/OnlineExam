@@ -1,0 +1,38 @@
+.modal-content{
+	padding: 10px;
+
+}
+.select_question{
+	width: 50%;
+}
+
+.detail_exam_header {
+  padding-bottom: 30px;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.content_section {
+  margin-top: 15px;
+}
+
+.table>tbody>tr>td{
+	border: none;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #ffffff;
+    font-weight: bold;
+}
+label{
+	color: #5e6e6b;
+	font-weight: bold;
+}
+.modal-title, h3, h4{
+	color: #28584e;
+	font-weight: bold;
+}
+.radio label{
+	color: #28584e;
+	font-weight: bold;
+}
+

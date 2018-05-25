@@ -1,0 +1,40 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+<div class="modal-header">
+  <h3 class="modal-title">Section</h3>
+</div>
+<div class="modal-body">
+  <form name="section_form" class="form-horizontal" role="form" novalidate ng-submit="addSection(section)">
+    <div class="row">
+      <div class="col-md-3">Tên:</div>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="tên của section" ng-model="section.name">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="time_limit_section">
+        <div class="col-md-3">Thời gian:</div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="number" max="60" min="1" class="form-control" placeholder="thời gian của section (phút)" ng-model="section.time_limit">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+    <div class="space-4"></div>
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="text-right">
+          <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+          <button class="btn btn-sm btn-primary" type="submit">
+            <i class="ace-icon fa fa-check"></i>{{buttonText}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

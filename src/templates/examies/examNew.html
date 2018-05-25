@@ -1,0 +1,52 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+<div class="modal-header">
+  <h3 class="modal-title">Cuộc thi</h3>
+</div>
+<div class="modal-body">
+  <form name="exam_form" class="form-horizontal" role="form" novalidate ng-submit="addExam(exam)">
+    <div class="row">
+      <div class="col-md-3">
+        <label>Tên</label>
+      </div>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="tên cuộc thi" ng-model="exam.name">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"><label>Thời gian bắt đầu:</label></div>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="datetime-local" class="form-control" name="open_time" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="exam.open_time" focus/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"><label>Thời gian kết thúc:</label></div>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="datetime-local" class="form-control" name="close_time" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="exam.close_time" min="{{exam.open_time}}"/>
+        </div>
+        <div class="role">
+          <span class="error" ng-show="myForm.input.$error.datetimelocal">
+          Not a valid date!</span>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+    <div class="space-4"></div>
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="text-right">
+          <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+          <button class="btn btn-sm btn-primary" type="submit">
+            <i class="ace-icon fa fa-check"></i>{{buttonText}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

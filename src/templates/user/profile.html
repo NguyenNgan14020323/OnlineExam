@@ -1,0 +1,49 @@
+<div class="col-md-6 col-md-offset-3" style="margin-bottom: 40px">
+    <h2>Thông tin cá nhân</h2>
+    <form name="form" ng-submit="signup()" role="form" novalidate>
+        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+            <label for="username">Họ</label>
+            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="user.firstName" required />
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">Họ không nên để trống</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+            <label for="username">Tên</label>
+            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="user.lastName" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Họ không nên để trống</span>
+        </div>
+        <div class="form-group clearfix">
+            <img src="{{user.avartar}}" style="width: 100px; height: 100px; display: block;">
+            <div id="direct_upload" 
+                  ngf-drop="uploadFiles($files)"
+                  ngf-drag-over-class="dragOverClass($event)"
+                  ng-model="files"
+                  ng-multiple="true" class="col-xs-1 clearfix" style="display: block;">
+                  <div class="form_line clearfix">
+                      <div class="form_controls">
+                          <div class="upload_button_holder">
+                              <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true"><button style="    margin-left: 117px;
+    margin-top: -52px;" class="btn btn-sm btn-success">Upload</button> </div>
+                          </div>
+                          
+                      </div>
+                  </div>
+              </div>
+
+        </div>
+        <!-- <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username" class="clearfix" style="display: block;">Ảnh đại diện</label>
+            <img src="img/avatar.jpg" style="width: 100px; height: 100px;">
+            <button>Upload</button>
+        </div> -->
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Email</label>
+            <input type="text" name="email" id="email" class="form-control" ng-model="user.email" required  />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email không nên để trống</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary" ng-click="update(files);" >Cập nhật thông tin</button>
+            <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <a href="#!/login" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>

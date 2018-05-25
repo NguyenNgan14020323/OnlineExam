@@ -1,0 +1,40 @@
+<div class="row">
+  <button type="button" class="close" ng-click="cancel();">
+    <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+  </button>
+  <div class="modal-header">
+    <h3 class="modal-title">Câu hỏi</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <div class="row select_category">
+      <div class="col-md-3" style="margin-top: 7px;"><p>Chủ đề:</p></div>
+      <div class="col-md-9">
+        <select class="form-control" ng-model="category"
+          ng-options="item.name for item in categories" ng-change="list_question_in_category()">
+        </select>
+      </div>
+    </div>
+    <div class="row show_question" style="border-bottom: 2px solid #e6e6e6;">
+      <div class="row" style="margin-top: 20px;"><p><span class="glyphicon glyphicon-align-justify"></span>Danh sách câu hỏi</p></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Chọn</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="question in questions track by question.id">
+          <tr>
+            <td style="display:none">{{question.id}}</td>
+            <td>{{question.content}}</td>
+            <td><input type="checkbox" ng-click="list_question_choose(question)"/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" style="margin-bottom: 7px; margin-top: 10px;">
+      <button type="button" class="btn btn-success pull-right"
+        ng-click="create_section_question_by_choose_question()">&nbsp;Submit</button>
+    </div>
+  </div>
+</div>

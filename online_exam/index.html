@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <body ng-cloak="" style="background-color: #d8ebe5">
+    <title>Manager Web Application</title>
+    <meta name="Description" content="Product Manager Web Application created with AngularJS and PHP">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="css/questions.css" type="text/css" />
+    <link rel="stylesheet" href="css/section.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    <nav class="navbar navbar-inverse" role="navigation" style="background-color: #3d4e49; ">
+     <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Home</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#/question/add">Quizzes</a></li>
+        <li><a href="#/examies">Examies</a></li>
+        <li><a href="#/categories">Categories</a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Lac Lac <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">My account</a></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+    <div class="container" style="background-color: #f7fcfa">
+        <div class="page-content" >
+          <div ng-view="" id="ng-view"></div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.11.2.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <!-- AngularJS custom codes -->
+    <script src="app/app.js"></script>
+    <script src="app/data.js"></script>
+    <script src="app/directives.js"></script>
+    <script src="app/questionCtrl.js"></script>
+    <script src="app/categoryCtrl.js"></script>
+    <script src="app/examCtrl.js"></script>
+    <script src="app/sectionCtrl.js"></script>
+    <script src="app/section_questionCtrl.js"></script>
+  <script src="app/upload/config.js"></script>
+  <script src="app/upload/animations.js"></script>
+  <script src="app/upload/controllers.js"></script>
+  <script src="app/upload/services.js"></script>
+
+
+    <!-- Some Bootstrap Helper Libraries -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/underscore.min.js"></script>
+    <script src="js/ckeditor.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="../bower_components/lodash/lodash.js"></script>
+  <script src="../bower_components/cloudinary-core/cloudinary-core.js"></script>
+  <!-- angular file upload -->
+  <script src="../bower_components/ng-file-upload/ng-file-upload-shim.js"></script>
+  <script src="../bower_components/angular-animate/angular-animate.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <!-- cloudinary angular plugin -->
+  <script src="../bower_components/cloudinary_ng/js/angular.cloudinary.js"></script>
+  <!-- angular file upload -->
+  <script src="../bower_components/ng-file-upload/ng-file-upload.js"></script>
+
+  </body>
+</html>
+
+

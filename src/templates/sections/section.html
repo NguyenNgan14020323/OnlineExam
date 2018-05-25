@@ -1,0 +1,43 @@
+<div class="row">
+  <h1 class="title">{{exam[0].name}}</h1>
+</div>
+<div class="row" style="border-bottom: 1px solid green;">
+  <div id="new_section">
+    <button type="button" class="btn btn-success fa fa-plus" ng-click="open(section)">&nbsp;Thêm mới Section</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>STT</td>
+            <td>Tên</td>
+            <td>Thời gian của section</td>
+            <td>Hành động</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="section in sections">
+            <td>{{$index + 1}}</td>
+            <td>{{section.name}}</td>
+            <td>Time: {{section.time_limit}} (minutes)</td>
+            <td>
+              <button type="button" class="btn btn-info" ng-click="edit(section)"><span class="glyphicon glyphicon-pencil"></span></button>
+              <button type="button" class="btn btn-danger" ng-click="deleteSection(section);"><span class="glyphicon glyphicon-trash"></span></button>
+              <div class="btn-group question_section" uib-dropdown>
+                <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">Câu hỏi <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                  <li role="menuitem"><a ng-click="showAllQuestion(questions, section)">Ngân hàng</a></li>
+                  <li role="menuitem"><a ng-click="addRandomQuestion(questions, section)">Ngẫu nhiên</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

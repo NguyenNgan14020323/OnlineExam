@@ -1,0 +1,37 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+<div class="modal-header">
+  <h3 class="modal-title">Exam</h3>
+</div>
+<div class="modal-body">
+  <form name="exam_form" class="form-horizontal" role="form" novalidate ng-submit="addExam(exam)">
+    <div class="form-group">
+      <input type="text" name="name" class="form-control" placeholder="name" ng-model="exam.name">
+    </div>
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="datetime-local" class="form-control" name="open_time" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="exam.open_time" focus/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="datetime-local" class="form-control" name="close_time" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="exam.close_time"/>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+    <div class="space-4"></div>
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="text-right">
+          <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+          <button class="btn btn-sm btn-primary" type="submit">
+            <i class="ace-icon fa fa-check"></i>{{buttonText}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

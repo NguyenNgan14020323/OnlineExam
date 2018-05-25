@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <div class="row">
+  <div class="col-md-12">
+    <h3 class="modal-title" style="float: left;">List Exam</h3>
+    <button type="button" class="btn btn-success fa fa-plus" ng-click="open(exam)" style="float: right;">&nbsp;New</button>
+  </div>
+</div>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-striped">
+        <tr><th ng-repeat="c in columns">{{c.text}}</th></tr>
+        <tr ng-repeat="c in examies">
+          <td><a href="#/examies/{{c.id}}/show">{{c.name}}</a></td>
+          <td>{{c.open_time}}</td>
+          <td>{{c.close_time}}</td>
+          <td>
+            <button><a href="#/examies/{{c.id}}/sections">Edit</a></button>
+            <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteExam(c);"></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+

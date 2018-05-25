@@ -1,0 +1,87 @@
+#section{
+  border-bottom: 1px solid #808080;
+}
+.question_section {
+  float: right;
+  margin: 1px 2px 2px 3px;
+}
+#new_section{
+  float: right;
+  margin-top: 3px;
+}
+
+.select_category {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8e8e8;
+  text-align: center;
+}
+
+.show_question {
+  margin-bottom: 15px;
+}
+
+.category {
+  margin-left: 125px;
+  margin-bottom: 30px;
+}
+
+.categories {
+  padding-left: 35px;
+}
+
+.random_question {
+  margin-top: 30px;
+  text-align: center;
+  margin-left: 40%;
+}
+
+.question_random {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.title_category {
+  padding-right: 10px;
+}
+
+.list_question_random {
+  padding-top: 10px;
+  border-top: 1px solid #e8e8e8;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}

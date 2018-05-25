@@ -1,0 +1,380 @@
+
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+<div class="modal-header">
+  <div ng-if="question.id == null" flex="20" layout="column">
+    <h3 class="modal-title">Add question</h3>
+  </div>
+  <div ng-if="question.id != null" flex="20" layout="column">
+    <h3 class="modal-title">Edit question</h3>
+  </div>
+</div>
+<div class="modal-body">
+  <div ng-if="question.id == null" class="col-sm-3">
+    <form>
+      Pick a topic:
+      <table>
+        <tr>
+          <td style="padding:10px;"> 
+            <div class="radio"><label><input type="radio" ng-model="question.type" value="Short"> Short Answers</label></div>
+          </td></tr>
+          <tr>
+            <td style="padding:10px;"> 
+              <div class="radio"><label>
+                <input type="radio" ng-model="question.type" value="Match"> Match Answers</label>
+              </div>
+            </td>
+          </tr>
+          <tr> <td style="padding:10px;">
+            <div class="radio"><label>
+              <input type="radio" ng-model="question.type" value="TF"> True/False Answers</label>
+            </div>
+          </td></tr>
+          <tr><td style="padding:10px;"> 
+            <div class="radio"><label>
+              <input type="radio" ng-model="question.type" value="MulChoose"> MultipleChoose</label>
+            </div>
+          </td>
+        </tr>
+        <tr><td style="padding:10px;"> 
+          <div class="radio"><label>
+            <input type="radio" ng-model="question.type" value="PictureQuestion"> PictureQuestion</label>
+          </div>
+        </td>
+      </tr>
+      <tr><td style="padding:10px;"> 
+        <div class="radio"><label>
+          <input type="radio" ng-model="question.type" ng-click = "MulQuestion()" value="MulQuestion"> MulQuestion</label>
+        </div>
+      </td>
+    </tr>
+    <tr><td style="padding:10px;"> 
+        <div class="radio"><label>
+          <input type="radio" ng-model="question.type" ng-click = "ImportQuestion()" value="ImportQuestion"> ImportQuestion</label>
+        </div>
+      </td>
+    </tr>
+  </table>
+</form>
+</div>
+
+<div  class="col-sm-9" style="box-shadow: -3px 3px 3px 3px #888888;">
+  <form  name="userForm"  style="margin: 10px 10px 150px 10px;" >
+    <table ng-if = "question.type != 'ImportQuestion'" class="table">
+      <tbody>
+        <tr>
+          <td> <label>Title</label></td>
+          <td>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <input ng-model="question.title" style="width:50%; min-height: 34px; " class="form-control"></input>
+              </md-input-container>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Content of question</label>
+          </td>
+          <td>
+            <div layout-gt-sm="row">
+              <div class="form-group">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <textarea ng-model="question.content" cols="65"  class="form-control" rows="5" ckeditor="editorOptions" placeholder="Noi dung..." ></textarea>          
+                </md-input-container>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Category</label>
+          </td>
+          <td>
+            <div> 
+              <select class="form-control select_question" id="category" name="category" ng-model="question.category_id">
+
+                <option ng-repeat="category in categories" ng-selected="question.category_id == category.id " value="{{category.id}}" >{{category.name}}</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Image:</label>
+          </td>
+          <td>
+            <div id="direct_upload" 
+            ngf-drop="uploadFiles($files)"
+            ngf-drag-over-class="dragOverClass($event)"
+            ng-model="files"
+            ng-multiple="true">
+            <div class="form_line">
+
+              <div class="form_controls">
+                <div class="upload_button_holder">
+                  <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true" ><button class="btn-success">Upload</button></div>
+                </div>
+
+              </div>
+            </div>
+            <div class="file" ng-repeat="file in files">
+              <div>
+                <input type="hidden" name="" ng-model="question.file" value="{{file.result}}">
+              </div>
+              <h4>{{file.name}} {{f.$error}} {{f.$errorParam}}</h4>
+              <div class="status">{{file.status}}</div>
+              <div class="progress-bar">
+                <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+              </div>
+              <div class="form_line">
+                <div class="form_controls">
+                  <div class="preview images_upload">
+                    <img ngf-src="file.result.url || file" style="width: 50%; height: auto;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div ng-switch="question.type">
+    <div ng-switch-when="ImportQuestion">
+      <p>Do you have a lot of questions you want to add?</p>
+
+<p>With an import you can upload a lot of quiz questions in one go.</p>
+
+<p>Click here to download an example .csv file with the correct structure for the import to work correctly.</p>
+
+<p>Just keep the top-row unchanged and enter your content below in the specified columns.</p>
+      <input style="margin-bottom: 10px; font-size: 14px;" type="file" file-reader="fileContent"/>
+      <div ng-if="fileContent" class="content">
+          <table border="1">
+            <tr ng-repeat="x in fileContent ">
+              <td ng-repeat="y in x track by $index">{{ y }}</td>
+            </tr>
+          </table>
+
+      </div>
+       <button style="font-size: 14px;  margin-top: 10px;" class="btn btn-sm btn-primary" ng-click=processData(fileContent)>Upload</button>
+    </div>
+
+    <div ng-switch-when="Match">
+      <div ng-repeat="answer in question.answers">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block " flex-gt-sm>
+            <label style="margin: 10px 90px 10px 10px;">Answer {{ $index + 1 }}</label>
+            <input style="width:39%; min-height: 34px;" ng-model="answer.content">
+          </md-input-container>
+          <md-input-container class="md-block " flex-gt-sm>
+            <label style="margin-left: 25px;">% points</label>
+            <input type="number" ng-model="answer.content_match">
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="Short">
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block 6" flex-gt-sm>
+          <label style="margin: 10px 90px 10px 10px;" >Answer </label>
+          <input style="width:39%; min-height: 34px;" ng-model="question.answers.content">
+        </md-input-container>
+      </div>
+<!-- <div ng-repeat="answer in question.answers">
+<div layout-gt-sm="row">
+<md-input-container class="md-block " flex-gt-sm>
+<label style="margin: 10px 90px 10px 10px;">Answer {{ $index + 1 }}</label>
+<input style="width:39%; min-height: 34px;" ng-model="answer.content">
+</md-input-container>
+<md-input-container class="md-block " flex-gt-sm>
+<label style="margin-left: 25px;">% points</label>
+<input type="number" ng-model="answer.content_match">
+</md-input-container>
+</div>
+</div> -->
+</div>
+
+<div ng-switch-when="TF">
+  <div ng-repeat="answer in question.answers">
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block " flex-gt-sm>
+        <label style="margin: 10px 90px 10px 10px;">Answer {{ $index + 1 }}</label>
+        <input style="width:65%; min-height: 34px;" ng-model="answer.content">
+      </md-input-container>
+
+      <md-input-container class="md-block " flex-gt-sm>
+        <input type="radio" ng-model="answer.tf" value="1">True
+        <input type="radio" ng-model="answer.tf" value="0">False
+      </md-input-container>
+    </div>
+  </div>
+</div>  
+
+<div ng-switch-when="MulChoose">
+  <div ng-repeat="answer in question.answers track by $index">
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block 6" flex-gt-sm>
+        <label style="margin: 10px 90px 10px 10px;">Answer {{ $index + 1 }}</label>
+        <input style="width:39%; min-height: 34px;" ng-model="answer.content">
+      </md-input-container>
+
+      <md-input-container class="md-block " flex-gt-sm>
+        <label style="margin-left: 50px;">% points</label>
+        <!--  <input type="number" ng-model="answer.grade" > -->
+<!-- <select ng-model="answer.grade" ng-change="checkTotal()" ng-options="p.text for p in points track by p.value"  style="width: 100px;">
+</select> -->
+<!-- <select ng-model="answer.grade" ng-change="checkTotal()" style="width: 100px;">
+<option ng-repeat="p in points" value="{{ p }}">{{ p }} %</option>
+</select> -->
+<select ng-model="answer.grade" ng-options="option for option in points"></select>
+</md-input-container>
+</div>
+</div>
+</div>
+<div ng-switch-when="PictureQuestion">
+  <div ng-repeat="answer in question.answers track by $index">
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block 6" flex-gt-sm>
+        <label style="margin: 10px 90px 10px 10px;">Answer {{ $index + 1 }}</label>
+        <div id="direct_upload" 
+        ngf-drop="uploadImage($files)"
+        ngf-drag-over-class="dragOverImg($event)"
+        ng-model="answer.content"
+        ng-multiple="true">
+        <div class="form_line">
+
+          <div class="form_controls">
+            <div class="upload_button_holder">
+              <div href="#" class="upload_button" ngf-select="uploadImage($files)" multiple title="upload" resetOnClick="true" ><button class="btn-success">Upload</button></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="file">
+
+          <h4>{{file.name}} {{f.$error}} {{f.$errorParam}}</h4>
+          <div class="status">{{file.status}}</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+          </div>
+          <div class="form_line">
+            <div class="form_controls">
+              <div class="preview images_upload">
+                <img ng-src="{{file.url}}" style="width: 50%; height: auto;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-input-container>
+
+    <md-input-container class="md-block " flex-gt-sm>
+      <label style="margin-left: 50px;">% points</label>
+      <select ng-model="answer.grade" ng-options="option for option in points"></select>
+    </md-input-container>
+  </div>
+</div>
+</div>
+<div ng-switch-when="MulQuestion">
+  <div ng-repeat="questions in question.answers track by $index">
+    <label>Question {{$index + 1}}</label>    <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteQuestion(questions);"></button>
+    <div>
+      <label>Title</label>
+      <input  style="margin-left:150px; width:39%; min-height: 34px;"  ng-model="questions.title">
+    </div>
+  </br>
+  <div >
+    <form>
+      <table>
+        <tr>
+          <td><div class="radio"><label><input type="radio" ng-model="questions.type" value="Short"> Short Answers</label></div></td>
+          <td><div class="radio"><label><input type="radio" ng-model="questions.type" value="Match"> Match Answers</label></div></td>
+          <td><div class="radio"><label><input type="radio" ng-model="questions.type" value="TF"> True/False Answers</label></div></td>
+          <td><div class="radio"><label><input type="radio" ng-model="questions.type" value="MulChoose"> MultipleChoose</label></div></td>
+        </tr>
+      </table>
+    </form>   
+  </div>
+</br>
+<div ng-switch="questions.type">
+  <!-- Mulchooce -->
+  <div ng-switch-when="MulChoose">
+    <div ng-repeat = "choice in questions.answers">
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block 6" flex-gt-sm>
+          <label style="margin: 10px 90px 10px 10px;">Answer {{$ind + 1}}</label>
+          <input style="width:39%; min-height: 34px;" ng-model="choice.content">
+        </md-input-container>
+        <md-input-container class="md-block " flex-gt-sm>
+          <label style="margin-left: 50px;">% points</label>
+          <select ng-model="choice.grade" ng-options="option for option in points"></select>
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  <!-- end mulchoose -->
+  <!-- True False -->
+  <div ng-switch-when="TF">
+    <div ng-repeat = "choice in questions.answers">
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block 6" flex-gt-sm>
+          <label style="margin: 10px 90px 10px 10px;">Answer {{ $ind + 1 }}</label>
+          <input style="width:39%; min-height: 34px;" ng-model="choice.content">
+        </md-input-container>
+        <md-input-container class="md-block " flex-gt-sm>
+          <input type="radio" ng-model="choice.tf" value="1">True
+          <input type="radio" ng-model="choice.tf" value="0">False
+        </md-input-container>
+      </div>
+    </div>
+  </div>  
+  <!-- end True False -->
+  <div ng-switch-when="Match">
+    <div ng-repeat = "choice in questions.answers">
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block 6" flex-gt-sm>
+          <label style="margin: 10px 90px 10px 10px;">Answer {{ $ind + 1 }}</label>
+          <input style="width:39%; min-height: 34px;" ng-model="choice.content">
+        </md-input-container>
+        <md-input-container class="md-block " flex-gt-sm>
+          <label style="margin-left: 25px;">% points</label>
+          <input type="number" ng-model="choice.grade">
+        </md-input-container>
+      </div>
+    </div>
+  </div>  
+  <div ng-switch-when="Short">
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block 6" flex-gt-sm>
+        <label style="margin: 10px 90px 10px 10px;" >Answer </label>
+        <input style="width:39%; min-height: 34px;" ng-model="questions.answers.content">
+      </md-input-container>
+    </div>
+  </div>  
+</div>
+</div>
+<button ng-click="addQuestion()">Add</button>
+</div>
+</div>
+
+<h4 ng-if="checkTotal()" style="float: right;">Tong diem cau hoi cua ban khong dung</h4>
+
+<form-element >
+  <div class="" style="margin-top: 50px;">
+    <button ng-if = "question.type != 'ImportQuestion'" ng-click="saveQuestion($files);" style="float: right; font-size: 14px; " class="btn btn-sm btn-primary" type="submit">
+      <i class="ace-icon fa fa-check">Save</i>{{buttonText}}
+    </button>
+    <a class="btn btn-sm" ng-click="cancel()" style="float: right; font-size: 14px;"><i class="ace-icon fa fa-reply"></i>Cancel</a> 
+  </div>
+</form-element>
+</form>
+</div>
+<a href="#/photos" class="back_link">Back to list</a>
+</div>
+</div>

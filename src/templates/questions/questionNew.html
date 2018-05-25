@@ -1,0 +1,245 @@
+<div class="modal-header">
+  <div ng-if="question.id == null" flex="20" layout="column">
+    <h3 class="modal-title">Thêm câu hỏi</h3>
+  </div>
+
+</div>
+<div class="modal-body">
+  <div style="margin-bottom: 35px">
+    <form>
+      Chọn kiểu câu hỏi:
+      <input type="radio" ng-model="question.type" ng-click = FillWord() value="FillWord">FillWord
+      <input type="radio" ng-model="question.type" ng-click = TrueFalse() value="TF">TF
+      <input type="radio" ng-model="question.type" ng-click = MulChoose() value="MulChoose">MulChoose
+      <input type="radio" ng-model="question.type" ng-click = "MulQuestion()" value="MulQuestion"> MulQuestion</label>
+       <input type="radio" ng-model="question.type" ng-click = "ImportQuestion()" value="ImportQuestion"> ImportQuestion</label>
+    </form>
+  </div>
+  
+  <form name="userForm">
+    <div layout-gt-sm="" >
+    <div ng-if = "question.type != 'ImportQuestion'">
+      <div class="form-group clearfix">
+        <label class="control-label col-sm-1 clear ">Tên:</label>
+        <div class="col-sm-10"> 
+          <input type="text" class="form-control clear" ng-model="question.title">
+        </div>
+      </div>
+    <div layout-gt-sm="" >
+      <div class="form-group clearfix">
+        <label class="control-label col-sm-1">Nội dung:</label>
+        <div class="col-sm-10"> 
+          <textarea ng-model="question.content" class="col-xs-12 form-control" rows="5" ></textarea>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group clearfix">
+        <label class="control-label col-sm-1">Chủ đề</label>
+        <div class="col-sm-6"> 
+          <select class="form-control select_question" id="category" name="category" ng-model="question.category_id" class="col-xs-6">
+            <option ng-repeat="category in categories" ng-selected="question.category_id == category.id " value="{{category.id}}" >{{category.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="clearfix" style="margin-bottom: 20px">
+      <div id="direct_upload" 
+      ngf-drop="uploadFiles($files)"
+      ngf-drag-over-class="dragOverClass($event)"
+      ng-model="files"
+      ng-multiple="true" class="col-xs-1 clearfix" style="display: block;">
+          <div class="form_line clearfix">
+              <label>File:</label>
+              <div class="form_controls">
+                  <div class="upload_button_holder">
+                      <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true"><button class="btn btn-sm btn-success">Upload</button> </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+      <div class="file clearfix" ng-repeat="file in files" style="display: block;">
+          <div>
+            <input type="hidden" name="" ng-model="question.file" value="file.result.url">
+          </div>
+          <h3>{{file.name}} {{f.$error}} {{f.$errorParam}}</h3>
+          <div class="status">{{file.status}}</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+          </div>
+          <div class="form_line">
+              <div class="form_controls">
+                  <div class="preview images_upload" ng-if="file.result.resource_type != 'video'">
+                      <img  ng-src="{{question.file}}" style="width: 450px; height: 200px">
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <div ng-switch="question.type" class="clearfix">
+      <div ng-switch-when="ImportQuestion">
+        <p>Do you have a lot of questions you want to add?</p>
+        <p>With an import you can upload a lot of quiz questions in one go.</p>
+        <p>Click here to download an example .csv file with the correct structure for the import to work correctly.</p>
+        <p>Just keep the top-row unchanged and enter your content below in the specified columns.</p>
+        <input style="margin-bottom: 10px; font-size: 14px;" type="file" file-reader="fileContent"/>
+        <div ng-if="fileContent" class="content">
+          <table class="table table-striped">
+            <tr ng-repeat="x in fileContent ">
+              <td ng-repeat="y in x track by $index">{{ y }}</td>
+            </tr>
+          </table>
+        </div>
+        <button style="font-size: 14px;  margin-top: 10px;" class="btn btn-sm btn-primary" ng-click=processData(fileContent)>Upload</button>
+      </div>
+
+      <div ng-switch-when="FillWord">
+        <div layout-gt-sm="" >
+          <div class="form-group clearfix " style="margin-left: -15px">
+            <label class="control-label col-sm-1">Đáp án:</label>
+            <div class="col-sm-10"> 
+              <textarea ng-model="question.answers.content" class="col-xs-12" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-switch-when="TF">
+        <div>
+           <div layout-gt-sm="">
+               <div class="form-group clearfix">
+                  <label class="control-label col-sm-2">Đáp án </label>
+                  <div class="col-sm-10"> 
+                      <md-input-container class="md-block " flex-gt-sm>
+                        <input type="radio" ng-model="question.answers.tf" value="1">Đúng
+                        <input type="radio" ng-model="question.answers.tf" value="0">Sai
+                      </md-input-container>
+                  </div>
+                </div>      
+            </div>
+        </div>
+      </div>
+      <div ng-switch-when="MulChoose">
+        <div>
+          <div ng-repeat="answer in question.answers  track by $index">
+              <div layout-gt-sm="">
+                  <div class="form-group clearfix">
+                    <label class="control-label col-sm-2">Đáp án {{ $index + 1 }}:</label>
+                    <div class="col-sm-10"> 
+                      <textarea ng-model="answer.content" class="col-xs-12" rows="3"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix">
+                    <label class="control-label col-sm-2">Phần trăm điểm:</label>
+                    <div class="col-sm-10"> 
+                    <input type="number" ng-model="answer.grade" class="col-xs-6">
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div ng-switch-when="MulQuestion">
+        <div ng-repeat="questions in question.answers track by $index">
+          <label>Question {{$index + 1}}</label>   <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteQuestion(questions);"></button>
+         
+        </br>
+        <div >
+          <form>
+              <input type="radio" ng-model="questions.type" ng-click="FillWord1()" value="FillWord">Câu hỏi điền từ
+              <input type="radio" ng-model="questions.type" ng-click="TrueFalse1()" value="TF">Câu hỏi đúng sai
+              <input type="radio" ng-model="questions.type" ng-click="MulChoose1()" value="MulChoose">Câu hỏi lựa chọn
+          </form>   
+        </div>
+      </br>
+      <div ng-switch="questions.type">
+        <!-- Mulchooce -->
+   
+        <div ng-switch-when="MulChoose">
+          <div style="display: block;">
+            <div class="form-group clearfix">
+              <label class="control-label col-sm-2" >Nội dung</label>
+              <div class="col-sm-10">
+                <input  style=" width:100%; min-height: 34px;"  ng-model="questions.title">
+              </div>
+            </div>
+            <div ng-repeat="choice in questions.answers  track by $index">
+                <div layout-gt-sm="">
+                    <div class="form-group clearfix">
+                      <label class="control-label col-sm-2">Đáp án {{ $index + 1 }}:</label>
+                      <div class="col-sm-10"> 
+                        <textarea ng-model="choice.content" class="col-xs-12" rows="3"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group clearfix">
+                      <label class="control-label col-sm-2">Phần trăm điểm:</label>
+                      <div class="col-sm-10"> 
+                      <input type="number" ng-model="choice.grade" class="col-xs-6">
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <!-- end mulchoose -->
+        <!-- True False -->
+        <div ng-switch-when="TF">
+          <div>
+            <div class="form-group clearfix">
+              <label class="control-label col-sm-2" >Nội dung</label>
+              <div class="col-sm-10">
+                <input  style=" width:100%; min-height: 34px;"  ng-model="questions.title">
+              </div>
+            </div>
+            <div layout-gt-sm="">
+               <div class="form-group clearfix">
+                  <label class="control-label col-sm-2">Đáp án </label>
+                  <div class="col-sm-10"> 
+                      <md-input-container class="md-block " flex-gt-sm>
+                        <input type="radio" ng-model="questions.answers.tf" value="1">Đúng
+                        <input type="radio" ng-model="questions.answers.tf" value="0">Sai
+                      </md-input-container>
+                  </div>
+                </div>
+            
+            </div>
+          </div>
+        </div>  
+        <div ng-switch-when="FillWord">
+          <div layout-gt-sm="" >
+           <div class="form-group clearfix">
+              <label class="control-label col-sm-2" >Title</label>
+              <div class="col-sm-10">
+                <input  style=" width:39%; min-height: 34px;"  ng-model="questions.title">
+              </div>
+            </div>
+            <div class="form-group clearfix ">
+              <label class="control-label col-sm-2">Đáp án:</label>
+              <div class="col-sm-10"> 
+                <textarea ng-model="questions.answers.content" class="col-xs-12" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button ng-click="addQuestion()">Add</button>
+  </div>
+    </div>
+    
+    <form-element>
+      <div class="" style="margin-top: 40px; margin-left: 50%; margin-bottom: 40px;">
+        <button ng-click="saveQuestion($files);" class="btn btn-sm btn-primary" type="submit">
+          <i class="ace-icon fa fa-check"></i>Thêm câu hỏi mới</button>
+      </div>
+    </form-element>
+    
+  </form>
+  
+  
+    
+</div>
+
+  
+</div>

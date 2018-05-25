@@ -1,0 +1,47 @@
+<button type="button" class="close" ng-click="cancel();">
+  <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+<div class="modal-header">
+  <h3 class="modal-title">Student</h3>
+</div>
+<div class="modal-body">
+  <form name="student_form" class="form-horizontal" role="form" novalidate >
+    <div ng-class="{'has-error' : student_form.name.$invalid}">
+      <div class="row">
+        <div class="col-md-3">
+          <label>Name</label>
+        </div>
+        <div class="col-md-9">
+          <div class="form-group">
+
+            <input type="text" class="form-control" name="name" placeholder="Name" ng-model="students.name" required>
+
+          </div>
+          <p ng-show="student_form.name.$invalid" class="help-block">Tên sinh viên cần phải có</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Email</label>
+      </div>
+      <div class="col-md-9">
+        <div class="form-group">
+           <input type="text" class="form-control" name="email" placeholder="Email" ng-model="students.email" required>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+    <div class="space-4"></div>
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="text-right">
+          <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+          <button ng-click="addNewStudent(students)" class="btn btn-sm btn-primary" type="submit" ng-disabled="student_form.$invalid || enableUpdate"  >
+            <i class="ace-icon fa fa-check"></i>{{buttonText}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

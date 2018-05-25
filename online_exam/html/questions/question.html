@@ -1,0 +1,25 @@
+<h1>Question</h1>
+
+<table ng-table="vm.tableParams" class="table" show-filter="true">
+    <tr>
+        <th ng-repeat="c in columns">{{c.text}}</th>
+    </tr>
+    <tr ng-repeat="c in questions">
+        <td title="'ID'" >
+            {{c.id}}</td>
+        <td title="'TITLE'" >
+            <a href="#/question/edit/{{c.id}}">{{c.title}}</a>
+        </td>
+        <td title="'CATEGORY'" >
+            <a href="">{{c.name}}</a>
+        </td>
+        <td>
+            <a href="#/question/edit/{{c.id}}"><button type="button" class="btn btn-primary fa fa-edit" ></button></a>
+            <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteQuestions(c);"></button>
+        </td>
+    </tr>
+</table>
+<a href="#/question/add"><button class="btn btn-danger fa fa-plus" >Add New Question</button></a>
+
+<!-- 
+<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(question);">&nbsp;Add New Question</button> -->

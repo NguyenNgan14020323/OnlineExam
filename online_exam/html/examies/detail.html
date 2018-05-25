@@ -1,0 +1,30 @@
+<h1>Detail Exam</h1>
+
+<div class="row">
+  <div class="col-xs-12 detail_exam_header">
+  	<span>Name: <span style="font-size: 18px">{{examies[0].name}}</span></span><br>
+  	<span>Open time: <span style="font-size: 18px">{{examies[0].open_time | date:'medium'}}</span></span><br>
+  	<span>Close time: <span style="font-size: 18px">{{examies[0].close_time | date:'medium'}}</span></span><br>
+  </div>
+	<div class="content col-xs-12">
+		<div ng-repeat="c in sections track by $index">
+      <div class="header_section">
+        <p class="col-xs-4">Session {{$index + 1}} </p>
+  			<p class="col-xs-4" style="float: right;">Time : {{c.time_limit}} minutes</p>
+      </div>
+
+			<div class="row content_section">
+        <table id="table" class="table table-hover table-mc-light-blue">
+          <tbody ng-repeat="question in c.question track by $index">
+            <tr>
+              <td>{{$index +1}}</td>
+              <td>{{question.content}}</td>
+              <td style="float: right;"><input type="number" class="form-control" ng-blur="getdetails(c, question)" ng-model="question.mark"></td>
+              <td><button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteSectionQuestion(question.id,c.id);"></button></td>
+            </tr>
+          </tbody>
+        </table>
+			</div>
+		</div>
+	</div>
+</div>

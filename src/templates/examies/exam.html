@@ -1,0 +1,30 @@
+<h3 style="padding-left: 15px;">Danh sách cuộc thi</h3>
+<div class="row">
+  <div class="col-md-3">
+    <button type="button" class="btn btn-success fa fa-plus" ng-click="open(exam)">&nbsp;Cuộc thi</button>
+  </div>
+</div>
+<br />
+<div class="row" style="padding-left: 15px;">
+  <div ng-if="examies.length != 0">
+    <table class="table table-striped">
+      <tr><th ng-repeat="c in columns">{{c.text}}</th></tr>
+      <tr ng-repeat="c in examies.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+        <td><a ui-sref="details({id: c.id})">{{c.name}}</a></td>
+        <td>{{c.open_time | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+        <td>{{c.close_time | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+        <td>
+          <button type="button" class="btn btn-info" ng-click="edit(c)"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button type="button" class="btn btn-danger" ng-click="deleteExam(c);"><span class="glyphicon glyphicon-trash"></span></button>
+          <button type="button" class="btn btn-default"><a href="#/examies/{{c.id}}/sections"><span class=""></span>Section</a></button>
+        </td>
+      </tr>
+    </table>
+    <div class="row" style="text-align: center;">
+      <ul uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></ul>
+    </div>
+  </div>
+  <div ng-if="examies.length == 0" style="border-top: 1px solid #e6e6e6;">
+    <h3 style="text-align: center;">Bạn chưa có cuộc thi nào.</h3>
+  </div>
+</div>
